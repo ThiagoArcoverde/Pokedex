@@ -1,0 +1,39 @@
+﻿@page "/"
+@using Pokedex.Models;
+@using Pokedex.Util;
+@inject PokeClient client;
+
+<link rel="stylesheet" href="../Pages/Index.razor.css" />
+
+<div class="container">
+    <img src="/img/pokedex.png" alt="pokedex logo" class="logo" />
+    <div class = "pokemon-row">
+        @foreach (Pokemon pokemon in PokemonList)
+        {
+            <a href="/pokemon/@pokemon.id">
+                <div class="pokemon-card">
+                    <img src="@pokemon.sprites.front_default" alt="Pokemon sprite">
+                    <h4 class="pokemon-name">@pokemon.name</h4>
+                    <div class="type-row">
+                        @foreach (var type in pokemon.types)
+                        {
+                            <span class="type-badge" style="background-color: @PokeColor.GetTypeColor(@type.type.name)">@type.type.name </span>
+                        }
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+@code {
+    List<Pokemon> PokemonList = new List<Pokemon>();
+    protected override async Task OnInitializedAsync()
+    {
+        for (int i = 1; i <= 151; i++)
+        {
+            PokemonList.Add(await client.GetPokemon(i.ToString()));
+            StateHasChanged();
+        }
+    }
+}
