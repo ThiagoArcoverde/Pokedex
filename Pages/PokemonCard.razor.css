@@ -5,12 +5,10 @@
 
 img{
     width: 200px;
-
 }
 
 .badge{
     text-transform: capitalize;
-
 }
 
 .container{
@@ -25,27 +23,30 @@ img{
     text-align: center;
     padding: 20px;
     padding-top: 0px;
-
 }
 
-.card-top{
+.card-top {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8%;
     text-align: center;
-    border-radius: 15px;
-
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom: black solid 3px;
 }
 
 .card-image-top {
-    height: 192px;
-    width: 192px;
+    height: 230px;
+    width: 250px;
 }
 
-.card{
+.card {
+    margin-top: 10%;
     box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-    border-radius: 15px;
+    border-radius: 22px;
+    border: solid black 3px;
+    background-image: linear-gradient(to bottom, rgb(37, 150, 190), cyan);
 }
 
 .pokemon-info{
@@ -53,24 +54,26 @@ img{
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 10px;
-
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .type-badge {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-bottom: 2%;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 16px;
     color: #ffffff;
     text-transform: uppercase;
-    margin-right: 3px;
-
+    display: flex;
+    justify-content: space-evenly;
+    width: 33%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .stat{
     text-transform: capitalize;
-
 }
 
 .stat-bar{
@@ -78,21 +81,18 @@ img{
     flex-direction: column;
     text-align: left;
     margin-bottom: 5px;
-
 }
 
 .poke-icon{
     width: 30px;
     height: 30px;
     margin-right: 10px;
-
 }
 
 .icon-container{
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .image-star-pokeball{

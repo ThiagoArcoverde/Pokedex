@@ -7,7 +7,24 @@
 
 <div class="container">
     <img src="/img/pokedex.png" alt="pokedex logo" class="logo" />
-    <div class = "pokemon-row">
+    <div class="region-selector">
+        <div class="label-select">
+            <label for="regions">Region: </label>
+            <select name="regions" id="regions" class="label-select-box" @bind="selectedValue">
+                <option>Kanto</option>
+                <option>Johto</option>
+                <option>Hoenn</option>
+                <option>Sinnoh</option>
+                <option>Unova</option>
+                <option>Kalos</option>
+                <option>Alola</option>
+                <option>Galar</option>
+                <option>Paldea</option>
+            </select>
+        </div>
+        <button class="region-button" @onclick="SetPokemonByRegion" disabled="@IsButtonDisabled">Select</button>
+    </div>
+    <div class="pokemon-row">
         @foreach (Pokemon pokemon in PokemonList)
         {
             <a href="/pokemon/@pokemon.id">
@@ -26,14 +43,93 @@
     </div>
 </div>
 
+<style>
+    body {
+        background-color: lightsteelblue;
+    }
+</style>
+
 @code {
-    List<Pokemon> PokemonList = new List<Pokemon>();
+    protected bool IsButtonDisabled { get; set; } = false;
+    private string? selectedValue { get; set; } = "Kanto";
+    private Region Region { get; set; } = new Region();
+    private List<Pokemon> PokemonList = new List<Pokemon>();
+
     protected override async Task OnInitializedAsync()
     {
-        for (int i = 1; i <= 151; i++)
+        IsButtonDisabled = true;
+        await PopulateRegion();
+        SetPokemonByRegion();
+        StateHasChanged();
+        IsButtonDisabled = false;
+    }
+
+    protected void SetPokemonByRegion()
+    {
+        IsButtonDisabled = true;
+        switch (selectedValue)
         {
-            PokemonList.Add(await client.GetPokemon(i.ToString()));
-            StateHasChanged();
-        }
+            case "Kanto":
+                PokemonList = Region.Kanto;
+                break;
+            case "Johto":
+                PokemonList = Region.Johto;
+                break;
+            case "Hoenn":
+                PokemonList = Region.Hoenn;
+                break;
+            case "Sinnoh":
+                PokemonList = Region.Sinnoh;
+                break;
+            case "Unova":
+                PokemonList = Region.Unova;
+                break;
+            case "Kalos":
+                PokemonList = Region.Kalos;
+                break;
+            case "Alola":
+                PokemonList = Region.Alola;
+                break;
+            case "Galar":
+                PokemonList = Region.Galar;
+                break;
+            case "Paldea":
+                PokemonList = Region.Paldea;
+                break;
+        };
+        IsButtonDisabled = false;
+    }
+
+    private async Task PopulateRegion()
+    {
+        List<Task<List<Pokemon>>> regionTasks = new List<Task<List<Pokemon>>>
+        {
+            client.GetKantoPokemon(),
+            client.GetJohtoPokemon(),
+            client.GetHoennPokemon(),
+            client.GetSinnohPokemon(),
+            client.GetUnovaPokemon(),
+            client.GetKalosPokemon(),
+            client.GetAlolaPokemon(),
+            client.GetGalarPokemon(),
+            client.GetPaldeaPokemon()
+        };
+        await Task.WhenAll(regionTasks);
+
+        Region.Kanto = regionTasks[0].Result;
+        Region.Johto = regionTasks[1].Result;
+        Region.Hoenn = regionTasks[2].Result;
+        Region.Sinnoh = regionTasks[3].Result;
+        Region.Unova = regionTasks[4].Result;
+        Region.Kalos = regionTasks[5].Result;
+        Region.Alola = regionTasks[6].Result;
+        Region.Galar = regionTasks[7].Result;
+        Region.Paldea = regionTasks[8].Result;
+    }
+
+    private void HandleSelectionChange(ChangeEventArgs e) 
+    {
+        if(e != null)
+            selectedValue = e.Value?.ToString();
     }
 }

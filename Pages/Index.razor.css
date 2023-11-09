@@ -3,35 +3,49 @@
 }
 
 .container {
+    background-color: steelblue;
     margin-top: 60px;
     display: flex;
     flex-direction: column;
+    border-radius: 36px;
+    padding-top: 2%;
+    border: 2px solid black;
+    margin-bottom: 10%;
+    padding-bottom: 5%;
 }
 
 .pokemon-row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 30px;
     justify-content: center;
     align-items: center;
 }
 
 .pokemon-card {
-    width: 200px;
-    height: 250px;
+    width: 250px;
+    height: 330px;
     padding: 15px;
-    background-color: antiquewhite;
+    background-image: linear-gradient(to bottom, rgb(37, 150, 190), cyan);
     align-items: center;
     text-align: center;
-    border: solid 1px lightgrey;
+    border: solid 3px black;
     border-radius: 22px;
-    box-shadow: 0 10px 10px 5px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.15);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.pokemon-card:hover{
+    width: 300px;
+    height: 380px;
+    border: solid 3px white;
+    box-shadow: 0 5px 5px 5px rgba(220, 255, 245, 0.40);
 }
 
 img {
     width: 80%;
-    height: 60%;
+    height: 65%;
 }
 
 span {
@@ -41,32 +55,79 @@ span {
 .type-row {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
 }
 
 .pokemon-name {
     text-transform: capitalize;
     text-decoration: none;
     color: black;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 110%;
 }
 
-.type-badge{
+.type-badge {
     padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-radius: 8px;
-    font-size: 13px;
+    border: solid 1px black;
+    font-size: 80%;
     color: #ffffff;
     text-transform: uppercase;
-    margin-right: 3px;
+    margin-bottom: 3%
 }
 
-.logo{
-    width: 400px;
-    margin: 0 auto 40px auto;
-
+.logo {
+    width: 300px;
+    height: auto;
+    margin: 0 auto 5% auto;
 }
 
-a{
+.region-selector {
+    text-align: center;
+    border-radius: 24px;
+    border: solid 3px black;
+    background-image: linear-gradient(to bottom, rgb(37, 150, 190), cyan);
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    padding: 2%;
+    box-shadow: 0 10px 10px 5px rgba(0, 0, 0, 0.35);
+    font-family: 'Berlin Sans FB'
+}
+
+.label-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 120%;
+}
+
+.label-select-box {
+    width: 30%;
+    border-radius: 12px;
+    text-align: center;
+    margin: 1%;
+    cursor: pointer;
+}
+
+.region-button {
+    background-color: deepskyblue;
+    border-radius: 16px;
+    display: block;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1.5%;
+    width: 50%;
+}
+
+.region-button:hover{
+    background-color: cornflowerblue;
+}
+
+a {
     text-decoration: none;
 }
