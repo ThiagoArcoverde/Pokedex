@@ -1,0 +1,32 @@
+﻿.container {
+    width: 70%;
+    height: 100px;
+    background-color: goldenrod;
+    border-radius: 8px;
+    border: solid black 2px;
+    box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.button {
+    border-radius: 16px;
+    height: 64px;
+    width: 64px;
+    padding: 10px;
+}
+
+.button:hover{
+    background-color: darkgoldenrod;
+}
+    
+.logo{
+    width: 180px;
+    height: 70px;
+}

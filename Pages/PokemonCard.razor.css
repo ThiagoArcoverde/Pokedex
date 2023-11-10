@@ -31,14 +31,14 @@ img{
     align-items: center;
     margin-bottom: 8%;
     text-align: center;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-bottom: black solid 3px;
 }
 
 .card-image-top {
-    height: 230px;
-    width: 250px;
+    height: 220px;
+    width: 220px;
 }
 
 .card {
