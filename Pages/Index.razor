@@ -1,7 +1,9 @@
 ﻿@page "/"
 @using Pokedex.Models;
 @using Pokedex.Util;
+@using System.Text.Json
 @inject PokeClient client;
+@inject IJSRuntime JSRuntime
 
 <link rel="stylesheet" href="../Pages/Index.razor.css" />
 
@@ -64,6 +66,19 @@
         IsButtonDisabled = false;
     }
 
+    private void SaveRegionToLocal()
+    {
+        JSRuntime.InvokeVoidAsync("localStorage.setItem", "regionData", JsonSerializer.Serialize(Region));
+    }
+
+    private async Task<Region?> LoadRegionFromLocal()
+    {
+        var storedRegion = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "regionData");
+        if(storedRegion != null)
+            return JsonSerializer.Deserialize<Region>(storedRegion);
+        return null;
+    }
+
     protected void SetPokemonByRegion()
     {
         IsButtonDisabled = true;
@@ -102,29 +117,38 @@
 
     private async Task PopulateRegion()
     {
-        List<Task<List<Pokemon>>> regionTasks = new List<Task<List<Pokemon>>>
+        var localRegion = await LoadRegionFromLocal();
+        if(localRegion != null)
         {
-            client.GetKantoPokemon(),
-            client.GetJohtoPokemon(),
-            client.GetHoennPokemon(),
-            client.GetSinnohPokemon(),
-            client.GetUnovaPokemon(),
-            client.GetKalosPokemon(),
-            client.GetAlolaPokemon(),
-            client.GetGalarPokemon(),
-            client.GetPaldeaPokemon()
-        };
-        await Task.WhenAll(regionTasks);
+            Region = localRegion;
+        }
+        else
+        {
+            List<Task<List<Pokemon>>> regionTasks = new List<Task<List<Pokemon>>>
+            {
+                client.GetKantoPokemon(),
+                client.GetJohtoPokemon(),
+                client.GetHoennPokemon(),
+                client.GetSinnohPokemon(),
+                client.GetUnovaPokemon(),
+                client.GetKalosPokemon(),
+                client.GetAlolaPokemon(),
+                client.GetGalarPokemon(),
+                client.GetPaldeaPokemon()
+            };
+            await Task.WhenAll(regionTasks);
 
-        Region.Kanto = regionTasks[0].Result;
-        Region.Johto = regionTasks[1].Result;
-        Region.Hoenn = regionTasks[2].Result;
-        Region.Sinnoh = regionTasks[3].Result;
-        Region.Unova = regionTasks[4].Result;
-        Region.Kalos = regionTasks[5].Result;
-        Region.Alola = regionTasks[6].Result;
-        Region.Galar = regionTasks[7].Result;
-        Region.Paldea = regionTasks[8].Result;
+            Region.Kanto = regionTasks[0].Result;
+            Region.Johto = regionTasks[1].Result;
+            Region.Hoenn = regionTasks[2].Result;
+            Region.Sinnoh = regionTasks[3].Result;
+            Region.Unova = regionTasks[4].Result;
+            Region.Kalos = regionTasks[5].Result;
+            Region.Alola = regionTasks[6].Result;
+            Region.Galar = regionTasks[7].Result;
+            Region.Paldea = regionTasks[8].Result;
+            SaveRegionToLocal();
+        }
     }
 
     private void HandleSelectionChange(ChangeEventArgs e) 
